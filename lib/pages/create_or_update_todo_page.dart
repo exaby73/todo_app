@@ -1,58 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class CreateOrUpdateTodoPage extends StatefulWidget {
+class CreateOrUpdateTodoPage extends HookWidget {
   const CreateOrUpdateTodoPage({super.key, this.initialValue});
 
   final String? initialValue;
 
   @override
-  State<CreateOrUpdateTodoPage> createState() => _CreateOrUpdateTodoPageState();
-}
-
-class _CreateOrUpdateTodoPageState extends State<CreateOrUpdateTodoPage> {
-  final _controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.initialValue != null) {
-      _controller.text = widget.initialValue!;
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final title = widget.initialValue == null ? 'Create Todo' : 'Update Todo';
+    final controller = useTextEditingController(text: initialValue);
+    final title = initialValue == null ? 'Create Todo' : 'Update Todo';
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pop(_controller.text);
-        },
+        onPressed: () => _popWithResult(context, controller.text),
         child: const Icon(Icons.save),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
-          controller: _controller,
+          controller: controller,
           decoration: const InputDecoration(
             labelText: 'Title',
             border: OutlineInputBorder(),
             filled: true,
           ),
-          onFieldSubmitted: (value) {
-            Navigator.of(context).pop(value);
-          },
+          onFieldSubmitted: (value) => _popWithResult(context, value),
         ),
       ),
     );
+  }
+
+  void _popWithResult(BuildContext context, String value) {
+    if (value.isEmpty) {
+      ScaffoldMessenger.of(context)
+        ..clearSnackBars()
+        ..showSnackBar(
+          const SnackBar(content: Text('Title is required.')),
+        );
+      return;
+    }
+    Navigator.of(context).pop(value);
   }
 }
