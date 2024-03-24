@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_hooks: 0.20.5
   shared_preferences: ^2.2.2
 
 dev_dependencies:

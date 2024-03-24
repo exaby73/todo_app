@@ -28,9 +28,10 @@ class _CreateOrUpdateTodoPageState extends State<CreateOrUpdateTodoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final title = widget.initialValue == null ? 'Create Todo' : 'Update Todo';
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Todo'),
+        title: Text(title),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

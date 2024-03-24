@@ -20,4 +20,14 @@ class Todo {
       'checked': checked,
     };
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Todo && other.title == title && other.checked == checked;
+  }
+
+  @override
+  int get hashCode => title.hashCode ^ checked.hashCode;
 }
