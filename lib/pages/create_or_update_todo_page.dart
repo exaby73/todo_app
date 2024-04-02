@@ -11,6 +11,15 @@ class CreateOrUpdateTodoPage extends HookWidget {
     final controller = useTextEditingController(text: initialValue);
     final title = initialValue == null ? 'Create Todo' : 'Update Todo';
 
+    final focusNode = useFocusNode();
+    useEffect(
+      () {
+        focusNode.requestFocus();
+        return null;
+      },
+      const [],
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -23,6 +32,7 @@ class CreateOrUpdateTodoPage extends HookWidget {
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
           controller: controller,
+          focusNode: focusNode,
           decoration: const InputDecoration(
             labelText: 'Title',
             border: OutlineInputBorder(),

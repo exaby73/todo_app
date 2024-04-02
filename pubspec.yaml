@@ -11,7 +11,8 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.5
   flutter_hooks: 0.20.5
-  shared_preferences: ^2.2.2
+  hydrated_bloc: ^9.1.5
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:

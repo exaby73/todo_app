@@ -43,13 +43,9 @@ class TodoList extends StatelessWidget {
     int index,
     String initialValue,
   ) async {
-    final String? text = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) {
-          return CreateOrUpdateTodoPage(initialValue: initialValue);
-        },
-      ),
-    );
+    final text = await Navigator.of(context)
+        .pushNamed('/create_or_update', arguments: initialValue)
+        .then((value) => value as String?);
     if (!context.mounted || text == null) return;
     context.read<TodoCubit>().update(index, text);
   }
